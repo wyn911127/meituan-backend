@@ -3,11 +3,11 @@ import Auth from  '../controller/admin/auth'
 import Admin from '../controller/admin/admin'
 
 const router = express.Router()
-
+router.get('/user_info', Auth.authUser, Admin.userInfo);  
 router.post('/user_login', Admin.userLogin);     //用户登录
 router.post('/admin_login',Admin.adminLogin);    //管理登录
 router.post('/wechat_login', Admin.wechatLogin);  // 微信登录
-router.get('/user_info', Auth.authAdmin, Admin.userInfo);           //获取用户信息
+// router.get('/user_info', Auth.authAdmin, Admin.userInfo);           //获取用户信息
 router.post('/user_info', Auth.authUser, Admin.setUserInfo);    // 设置获取用户
 router.post('/change_avatar', Auth.authAdmin, Admin.changeAvatar)  //改头像
 router.post('/logout', Admin.logout);   //退出
