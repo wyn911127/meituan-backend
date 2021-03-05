@@ -65,6 +65,8 @@ class Pay extends BaseClass {
                     return;
                 }
                 await saveDB({method: 'scan', id, order_id, payType})
+                //修改二维码为直接请求payNotice
+                result.data.qrcode = config.notifyUrl+"?outTradeNo="+result.data.outTradeNo
                 res.send({
                     status: 1,
                     data: {...result, ...payData, order_id},
@@ -133,13 +135,14 @@ class Pay extends BaseClass {
     async payNotice(req, res, next) {
         let noticeData = req.body;
         console.log('noticeData', noticeData)
+        let outTradeNo = req.query.outTradeNo;
         try {
-            let sign = noticeData.sign;
-            delete noticeData.sign;
-            let verifySign = this.sign(noticeData)
-            console.log('verifySign === sign', verifySign === sign)
-            if (verifySign === sign && noticeData.status === '2') {
-                let pay = await PayModel.findOne({id: noticeData.outTradeNo});
+            // let sign = noticeData.sign;
+            // delete noticeData.sign;
+            // let verifySign = this.sign(noticeData)
+            // console.log('verifySign === sign', verifySign === sign)
+            // if (verifySign === sign && noticeData.status === '2') {
+                let pay = await PayModel.findOne({id: outTradeNo});
                 pay.status = '支付成功';
                 pay.code = 200;
                 let Order = await OrderModel.findOne({id: pay.order_id});
@@ -148,7 +151,7 @@ class Pay extends BaseClass {
                 await pay.save();
                 await Order.save();
                 res.send(200);
-            }
+            // }
         } catch (err) {
             console.log('支付失败', err);
         }
