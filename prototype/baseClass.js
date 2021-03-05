@@ -72,21 +72,21 @@ export default class BaseClass {
     let ip = req.ip;
     const ipArr = ip.split(':');                    //切割字符串提取ip
     ip = ipArr[ipArr.length - 1];
-    if (process.env.NODE_ENV == 'dev') {    //开发环境
-      ip = '113.105.128.251';
-    }
+    // if (process.env.NODE_ENV == 'dev') {    //开发环境
+    //   ip = '123.118.106.229';
+    // }
     try {
       let result;
       //根据ip地址请求获取数据
       result = await this.fetch('http://apis.map.qq.com/ws/location/v1/ip', {
         ip,
         key: this.tencentkey,
-      });
+      },'GET');
       if (result.status !== 0) {
         result = await this.fetch('http://apis.map.qq.com/ws/location/v1/ip', {
           ip,
           key: this.tencentkey2,
-        })
+        },'GET')
       }
 
       //status===0表示请求成功
@@ -104,7 +104,14 @@ export default class BaseClass {
              status: -1,
              message: '定位失败'
          })*/
-        return {lat: 23.02067, lng: 113.75179, city: '东莞市'}
+        //  const cityInfo = {
+        //   lat: result.result.location.lat,    //纬度
+        //   lng: result.result.location.lng,    //经度
+        //   city: result.result.ad_info.city,
+        // };
+        // cityInfo.city = cityInfo.city.replace(/市$/, '');
+        // return cityInfo;
+        return {lat: 40.22077, lng: 116.23128, city: '北京市'}
 
       }
     } catch (err) {
@@ -141,7 +148,7 @@ export default class BaseClass {
   }
 
   //根据关键词搜索位置
-  async locationSearch(keyword) {
+  async locationSearch(keyword) { 
     try {
       let reqData = {
         keyword: encodeURI(keyword),
