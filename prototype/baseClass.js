@@ -72,9 +72,9 @@ export default class BaseClass {
     let ip = req.ip;
     const ipArr = ip.split(':');                    //切割字符串提取ip
     ip = ipArr[ipArr.length - 1];
-    // if (process.env.NODE_ENV == 'dev') {    //开发环境
-    //   ip = '123.118.106.229';
-    // }
+    if (process.env.NODE_ENV == 'dev') {    //开发环境
+      ip = '123.118.106.229';
+    }
     try {
       let result;
       //根据ip地址请求获取数据
