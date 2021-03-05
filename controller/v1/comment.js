@@ -22,9 +22,9 @@ class Comment extends BaseClass {
       return;
     }
     try {
-      let order = await OrderModel.findOne({id: order_id}, '-_id').populate([
+      let order = await OrderModel.findOne({id: order_id}).populate([
         {path: 'restaurant'}, {path: 'user_id'}]);
-
+      console.log(order)
       //判断订单能否评价
       let user = await AdminModel.findOne({id: order.user_id.id});
       let user_id = req.session.user_id;
@@ -44,7 +44,7 @@ class Comment extends BaseClass {
         avatar: user.avatar,
         restaurant_id: order.restaurant.id,
         restaurant: order.restaurant._id,
-        pic_url: JSON.parse(pic_url),
+        pic_url: pic_url,
         comment_data,
         order_id,
         food_score,
