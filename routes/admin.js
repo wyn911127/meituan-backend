@@ -9,7 +9,7 @@ router.post('/admin_login',Admin.adminLogin);    //管理登录
 router.post('/wechat_login', Admin.wechatLogin);  // 微信登录
 // router.get('/user_info', Auth.authAdmin, Admin.userInfo);           //获取用户信息
 router.post('/user_info', Auth.authUser, Admin.setUserInfo);    // 设置获取用户
-router.post('/change_avatar', Auth.authAdmin, Admin.changeAvatar)  //改头像
+router.post('/change_avatar', Auth.authUser, Admin.changeAvatar)  //改头像
 router.post('/logout', Admin.logout);   //退出
 router.post('/address', Auth.authUser, Admin.addAddress);      //添加收货地址
 router.get('/all_address', Auth.authUser, Admin.getAllAddress)        //获取用户所有地址
