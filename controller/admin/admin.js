@@ -372,8 +372,9 @@ class Admin extends BaseClass {
 
   //获取用户信息
   async userInfo(req, res, next) {
+    console.log(req)
     try {
-      let user_info = await AdminModel.findOne({id: req.session.admin_id}, 'username id avatar status create_time');
+      let user_info = await AdminModel.findOne({id: req.session.user_id}, 'username id avatar status create_time');
       res.send({
         status: 200,
         data: user_info,
@@ -418,6 +419,8 @@ class Admin extends BaseClass {
   //更改头像
   async changeAvatar(req, res, next) {
     let {pic_url} = req.body;
+    console.log(req)
+    console.log(req.body);
     if (!pic_url) {
       res.send({
         status: -1,
@@ -426,7 +429,7 @@ class Admin extends BaseClass {
       return;
     }
     try {
-      await AdminModel.update({id: req.session.admin_id}, {avatar: pic_url});
+      await AdminModel.update({id: req.session.user_id}, {avatar: pic_url});
       res.send({
         status: 200,
         message: '更改头像成功'
