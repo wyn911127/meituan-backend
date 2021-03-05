@@ -51,6 +51,6 @@ router.post('/order_confirm', Auth.authAdmin, Order.confirmOrder);         // �
 
 //支付
 router.post('/pay', Auth.authUser, Pay.initPay);                    //初始化支付
-router.post('/notify_url', Pay.payNotice);            //支付异步通知
+router.get('/notify_url', Pay.payNotice);            //支付异步通知
 router.get('/listen_status', Auth.authUser, Pay.listenStatus);          //监听扫描结果
 export default router;
